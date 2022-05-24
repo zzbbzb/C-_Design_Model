@@ -5,82 +5,75 @@ using namespace std;
 
 namespace Factory{
     /*
-        工厂
+        工厂 
         生产红色棉布
-        生产绿色麻布
-        生产蓝色丝绸
+        生产绿色棉布
+        生产蓝色棉布
+
+        多个工厂类, 一个产品抽象类, 利用多态创建不同的产品对象, 避免if-else
 
         抽象生产工厂
         对每个产品创建一个生产工厂
         直接用对应产品工厂生产产品
 
-        缺点, 不符合开闭原则, 需要修改getIntance
+        缺点, 产品数量上去后, 增加类也很多, 增加代码复杂度
     */
 
-    class Material{
+    class Cotton{
     public:
-        string color;
-        string name;
-        
-        Material(string c, string n): color(c), name(n){}
-        virtual ~Material(){}
+        virtual ~Cotton(){}
 
         virtual void Show() = 0;
     };
 
-    class Silk: public Material{
+    class RedCotton: public Cotton{
     public:
-        Silk(string c, string n): Material(c, n){}
         void Show() {
-            cout << color << " " << name << endl;
+            cout << "红色 棉布" << endl;
         }
     };
 
-    class Cotton: public Material{
+    class GreenCotton: public Cotton{
     public:
-        Cotton(string c, string n): Material(c, n){}
         void Show() {
-            cout << color << " " << name << endl;
+            cout << "绿色 棉布" << endl;
         }
     };
 
 
-    class Linen: public Material{
+    class BlueCotton: public Cotton{
     public:
-        Linen(string c, string n): Material(c, n){}
         void Show() {
-            cout << color << " " << name << endl;
+            cout << "蓝色 棉布" << endl;
         }
     };
 
     class Factory {
     public:
         virtual ~Factory(){}
-        virtual Material* GetIntance() = 0;
+        virtual Cotton* GetIntance() = 0;
     };
 
-    class CottonFactory: public Factory{
+    class RedCottonFactory: public Factory{
     public:
-        Material* GetIntance(){
-            return new Cotton("红色", "棉布");
+        Cotton* GetIntance(){
+            return new RedCotton();
         }
     };
 
-    class LinenFactory: public Factory{
+    class GreenCottonFactory: public Factory{
     public:
-        Material* GetIntance(){
-            return new Linen("绿色", "麻布");
+        Cotton* GetIntance(){
+            return new GreenCotton();
         }
     };
 
-    class SilkFactory: public Factory{
+    class BlueCottonFactory: public Factory{
     public:
-        Material* GetIntance(){
-            return new Silk("蓝色", "丝绸");
+        Cotton* GetIntance(){
+            return new BlueCotton();
         }
     };
-
-
 
 }
 
