@@ -4,6 +4,10 @@ project(designModel VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
+# include_directories(CreationalPatterns)
+# include_directories(CreationalPatterns/SingletonPattern)
+# include_directories(CreationalPatterns/FactoryPattern)
+
 add_executable(designModel main.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

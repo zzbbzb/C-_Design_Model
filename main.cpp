@@ -1,7 +1,11 @@
 #include <iostream>
-#include "FactoryModel/SimpleFactory.h"
-#include "FactoryModel/Factory.h"
-#include "FactoryModel/AbstractFactory.h"
+#include "CreationalPatterns/FactoryPattern/SimpleFactory.h"
+#include "CreationalPatterns/FactoryPattern/Factory.h"
+#include "CreationalPatterns/FactoryPattern/AbstractFactory.h"
+#include "CreationalPatterns/SingletonPattern/HungryModeSingleton.h"
+#include "CreationalPatterns/SingletonPattern/LazyModeSingleton.h"
+#include "CreationalPatterns/BuilderPattern/Builder.h"
+
 
 
 int main(int, char**) {
@@ -9,13 +13,44 @@ int main(int, char**) {
     MaterialFactory * factory = new MaterialFactory();
     Material * m = factory->GetIntance("棉布");
     m->Show();
-
+    delete factory;
+    delete m;
 
     Factory::Factory* lFactory = new Factory::BlueCottonFactory();
-    lFactory->GetIntance()->Show();
+    Factory::Cotton* c = lFactory->GetIntance();
+    c->Show();
+    delete lFactory;
+    delete c;
 
     AbstractFactory::Factory* aFactory = new AbstractFactory::GreenLinenFactory();
-    aFactory->GetColor()->Show();
+    AbstractFactory::Linen* l = dynamic_cast<AbstractFactory::Linen*>(aFactory->GetMaterial());
+    l->Show();
+    delete aFactory;
+    delete l;
+
+    
+    LazyMode* lm = LazyMode::GetInstance();
+    cout << "&lm=" << &lm << endl;
+    lm = LazyMode::GetInstance();
+    cout << "&lm=" << &lm<< endl;
+
+    HungryMode* hm = HungryMode::GetInstance();
+     cout << "&hm=" << &hm << endl;
+    hm = HungryMode::GetInstance();
+    cout << "&hm=" << &hm<< endl;
+
+    
+    BuilderPattern::MealBuilder* mealBuilder = new BuilderPattern::MealBuilder();
+    BuilderPattern::Meal* vegMeal = mealBuilder->PrepareVegMeal();
+    BuilderPattern::Meal* nonVegMeal = mealBuilder->PrepareNonVegMeal();
+
+    vegMeal->ShowItem();
+    nonVegMeal->ShowItem();
+
+    mealBuilder->Delete(vegMeal);
+    mealBuilder->Delete(nonVegMeal);
+
+    delete mealBuilder;
 
 
     return 0;
