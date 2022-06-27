@@ -5,7 +5,7 @@
 #include "CreationalPatterns/SingletonPattern/HungryModeSingleton.h"
 #include "CreationalPatterns/SingletonPattern/LazyModeSingleton.h"
 #include "CreationalPatterns/BuilderPattern/Builder.h"
-
+#include "StructuralPattern/DecoratorPattern/Decorator.h"
 
 
 int main(int, char**) {
@@ -52,6 +52,16 @@ int main(int, char**) {
 
     delete mealBuilder;
 
+    shared_ptr<Decorator::Pancake> pancake = shared_ptr<Decorator::Pancake>(new Decorator::BasePancake);
+    cout << pancake->GetMsg() << "," << pancake->GetPrice() << endl;
 
+    pancake = shared_ptr<Decorator::EggPancakeDeorator>(new Decorator::EggPancakeDeorator(pancake));
+    cout << pancake->GetMsg() << "," << pancake->GetPrice() << endl;
+    pancake = shared_ptr<Decorator::EggPancakeDeorator>(new Decorator::EggPancakeDeorator(pancake));
+    cout << pancake->GetMsg() << "," << pancake->GetPrice() << endl;
+    pancake = shared_ptr<Decorator::SauageDecorator>(new Decorator::SauageDecorator(pancake));
+    cout << pancake->GetMsg() << "," << pancake->GetPrice() << endl;
+
+    getchar();
     return 0;
 }
