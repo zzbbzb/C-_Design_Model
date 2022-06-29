@@ -6,7 +6,18 @@
 #include "CreationalPatterns/SingletonPattern/LazyModeSingleton.h"
 #include "CreationalPatterns/BuilderPattern/Builder.h"
 #include "StructuralPattern/DecoratorPattern/Decorator.h"
+#include "StructuralPattern/AdapterPattern/Adapter.h"
+#include "StructuralPattern/ProxyPattern/Proxy.h"
+#include "StructuralPattern/DecoratorPattern/Decorator2.h"
 
+// #define CalFuncExecTime(content, text) Decorator2::FuncTimer<void *, void *>([](void *)-> void* {\
+// 	do{content}while(false);\
+// 	return nullptr;\
+// }, text)(nullptr)\
+
+    int test1(int b, int c){
+        return b + c;
+    };
 
 int main(int, char**) {
     
@@ -61,6 +72,41 @@ int main(int, char**) {
     cout << pancake->GetMsg() << "," << pancake->GetPrice() << endl;
     pancake = shared_ptr<Decorator::SauageDecorator>(new Decorator::SauageDecorator(pancake));
     cout << pancake->GetMsg() << "," << pancake->GetPrice() << endl;
+
+
+    AdapterSpace::MediaPlayerAdapter* mp = new AdapterSpace::MediaPlayerAdapter();
+    mp->play("mp3", "hello.mp3");
+    mp->play("vlc", "vlc.vlc");
+    mp->play("mp4", "mp4.mp4");
+
+    delete mp;
+
+    ProxySpace::ProxyImage* pImg = new ProxySpace::ProxyImage("1.png");
+    pImg->Display();
+
+    pImg->Display();
+
+    delete pImg;
+
+
+
+    string s = "timer1: ";
+    Decorator2::FuncTimer<int, int, int> timer1([](int a, int b)->int{return a + b;}, "timer1: ");
+    std::cout <<timer1(2,4) << std::endl;
+    
+    class A{
+    public:
+        int x;
+        explicit A(int x): x(x){}
+        int test(int a, int b) const {
+            return a + b + x;
+        }
+    };
+
+    CalFuncExecTime(A a(6);
+			                a.test(1, 4);,
+	                "A : "
+	);
 
     getchar();
     return 0;
