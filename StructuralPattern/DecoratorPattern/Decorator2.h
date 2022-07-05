@@ -3,6 +3,8 @@
 #include <functional>
 #include <chrono>
 
+// https://blog.csdn.net/qq_43605388/article/details/119962335
+
 #define CalFuncExecTime(content, text) Decorator2::FuncTimer<void *, void *>([&](void *) -> void * {\
 	do{content}while(false);\
 	return nullptr;\
